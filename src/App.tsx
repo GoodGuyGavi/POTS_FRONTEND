@@ -10,6 +10,7 @@ import DashboardContent from './components/DashboardContent'
 import LoginScreen from './components/LoginScreen'
 import { statusReport, poList } from './data/mockData'
 import { Buffer } from 'buffer'
+import { onSubmit } from './components/helper_functions'
 import { getUser, setUser, removeUser } from './components/auth'
 import { useQuery } from '../src/models/reactUtils'
 import {
@@ -24,7 +25,6 @@ import { RootStore, StoreContext } from '../src/models'
 import { observer } from 'mobx-react'
 
 import MeContext, { IMeContext } from './MeContext'
-import { onSubmit } from './components/helper_functions'
 const rootStore = RootStore.create(undefined, {
   gqlHttpClient: createHttpClient('http://localhost:4000/graphql'),
 })

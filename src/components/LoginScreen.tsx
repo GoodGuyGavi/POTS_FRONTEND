@@ -309,7 +309,7 @@ const FormContainer = styled.div`
     outline: none;
     height: 2.5rem;
     width: 60%;
-    padding: 0.8rem 1.15rem 0;
+    padding: auto;
   }
 
   @media (max-width: 900px) {
@@ -371,7 +371,7 @@ const FormContainer = styled.div`
     border: none;
     background-color: transparent;
     width: 60%;
-    margin: 50px auto;
+    margin: 65px auto;
   }
   @media (max-width: 900px) {
     .login-btn {
