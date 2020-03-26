@@ -1,5 +1,11 @@
-import React, { useState } from 'react'
-import { Card, Input, Icon, Button } from 'antd'
+import React, { useState, useContext } from 'react'
+import { Card, Input, Icon, Button, message } from 'antd'
+import { Buffer } from 'buffer'
+import { observer } from 'mobx-react'
+import Logo from '../components/Logo'
+import MeContext from '../MeContext'
+import { getUser, setUser, removeUser } from '../components/auth'
+import { onSubmit } from '../components/helper_functions'
 import potsLogo from '../img/pots-hires.png'
 import daviesLogo from '../img/davies-hires.png'
 import ftLogo from '../img/ft-hires.png'
@@ -9,7 +15,51 @@ import { url } from 'inspector'
 import logInBackground from '../img/login-graphics.png'
 import { IoIosLogIn } from 'react-icons/io'
 
-const Login = (props: any) => {
+export interface IProps {
+  getUser?: any
+  state?: any
+  setState?: any
+  loginQuery?: any
+  messageInfo?: any
+  login?: any
+  title?: any
+  setQuery?: any
+  rootStore?: any
+  flag?: any
+}
+
+const Login = (props: IProps) => {
+  const context = useContext(MeContext)
+
+  const {
+    flag,
+    setQuery,
+    rootStore,
+    login,
+    state,
+    setState,
+    messageInfo,
+  } = props
+  const [userinfo, setInfo] = useState({
+    username: '',
+    password: '',
+  })
+  console.log(flag, 'FKING FLAG')
+  if (messageInfo && flag !== 'logout') {
+    const { userLevel } = messageInfo
+    console.log('Userlevel', userLevel)
+    if (userLevel == 'Admin' || userLevel == 'Supplier') {
+      console.log('ILANG BESES')
+      let object = {
+        username: userinfo.username,
+        password: userinfo.password,
+        loggedin: true,
+      }
+      setUser(object)
+      context.login(true)
+    }
+  }
+
   return (
     <FormContainer>
       <div className="brand-wrapper">
@@ -47,22 +97,36 @@ const Login = (props: any) => {
           <form className="login-form">
             <div className="input-container">
               <label> Username/Email</label>
-              <input className="input-empty" type="email" required />
+              <input
+                className="input-empty"
+                value={userinfo.username}
+                onChange={(e: any) => {
+                  setState({ ...state, username: e.target.value })
+                  setInfo({ ...userinfo, username: e.target.value })
+                }}
+                required
+              />
             </div>
             <div className="input-container">
               <label>Password</label>
-              <input className="input-empty" type="password" required />
-              <Link to="/" className="forgot-pass">
+              <input
+                className="input-empty"
+                type="password"
+                value={userinfo.password}
+                onChange={(e: any) =>
+                  setInfo({ ...userinfo, password: e.target.value })
+                }
+                required
+              />
+              {/* <Link to="/" className="forgot-pass">
                 Trouble logging in?
-              </Link>
+              </Link> */}
             </div>
             <div className="input-container">
               <button
                 className="login-btn"
-                onClick={() =>
-                  props.setState({ ...props.state, path: '/DashBoard' })
-                }>
-                Log In <IoIosLogIn />
+                onClick={() => onSubmit(setQuery, rootStore, userinfo)}>
+                Log In <IoIosLogIn></IoIosLogIn>
               </button>
             </div>
           </form>
@@ -76,7 +140,7 @@ const Login = (props: any) => {
   )
 }
 
-export default Login
+export default observer(Login)
 
 const FormContainer = styled.div`
   justify-content: center;

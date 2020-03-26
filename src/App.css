@@ -84,7 +84,25 @@
   overflow: auto;
   padding: 8px 24px;
   height: 330px;
-  flex: 0 0 860px;
+  flex: 0 0 950px;
+}
+
+.orderitemtablemax{
+  /* background-color: pink;
+  margin: 5px;
+  flex: 1 1 300;
+  width: 300;
+  border: "1px solid #d9d9d9";
+  border-radius: 4 ;
+  overflow: auto; */
+  margin: 5px;
+  /* background-color: pink; */
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  overflow: auto;
+  padding: 8px 24px;
+  height: 330px;
+  flex: 0 330px 1500px;
 }
 
 .history {
@@ -93,9 +111,9 @@
   display: flex;
   flex: 1 1 auto;
   flex-flow: column wrap;
-  /* width: 300; */
-  border: '1px solid #d9d9d9';
-  border-radius: 4;
+  width: 300;
+  border: "1px solid #d9d9d9";
+  border-radius: 4 ;
   align-items: center;
 }
 .content1orders {
@@ -153,7 +171,16 @@
   flex-flow: column wrap;
 }
 
-.history1 {
+.itemdelvstatus{
+  /* background-color: grey; */
+  justify-content: "center";
+ margin: 5px;
+ flex: 1 1 auto;
+ display: flex;
+ flex-flow: column wrap;
+}
+
+.history1{
   /* background-color: grey; */
   margin: 5px;
   flex: 1 1 auto;
@@ -249,18 +276,6 @@
   margin-bottom: 50px;
 }
 
-.truck {
-  display: flex;
-  flex: 1 1 auto;
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 180%;
-  height: 100%;
-  margin-top: -55px;
-  background-image: url('truck.png');
-  margin-left: 450px;
-  position: absolute;
-}
 
 .App-logo {
   height: 40vmin;
@@ -320,4 +335,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.site-calendar-demo-card {
+  width: 300px;
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
 }

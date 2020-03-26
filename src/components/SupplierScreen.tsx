@@ -4,6 +4,8 @@ import SortBy from '../components/SortBy'
 import SupplierList from '../components/SupplierList'
 import { POdata } from '../data/MasterListMock'
 import { Divider, Input } from 'antd'
+import { sort, SearchFilterSupplier } from '../components/helper_functions'
+
 const { Search } = Input
 
 export interface ISupplierScreenProps {
@@ -14,19 +16,10 @@ const OrderScreen = (props: ISupplierScreenProps) => {
   const [state, setState] = useState({
     sortby: 'name',
     POdata: props.po,
+    datasource: [],
+    search: '',
   })
 
-  const sorts = [
-    {
-      value: 'name',
-      desc: 'Name',
-    },
-
-    {
-      value: 'status',
-      desc: 'Status',
-    },
-  ]
   return (
     <div className="content1orders">
       <div>
@@ -37,17 +30,24 @@ const OrderScreen = (props: ISupplierScreenProps) => {
       <div className="searchandsort">
         <div className="search">
           <Search
+            // value={state.search}
+            // onChange={value => console.log(value., 'SEARCH value')}
             placeholder="input search text"
-            onSearch={value => console.log(value)}
+            onSearch={value =>
+              SearchFilterSupplier(value, state.POdata, setState, state)
+            }
             enterButton
           />
         </div>
         <div className="sort">
-          <SortBy state={state} setState={setState} sorts={sorts}></SortBy>
+          <SortBy state={state} setState={setState} sorts={sort}></SortBy>
         </div>
       </div>
       <div className="masterlist">
-        <SupplierList state={state} setState={setState}></SupplierList>
+        <SupplierList
+          filtredPO={state.datasource}
+          state={state}
+          setState={setState}></SupplierList>
       </div>
     </div>
   )

@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react'
 import {
   Calendar,
   List,
-  Avatar,
   Typography,
   Card,
   Divider,
@@ -15,13 +14,20 @@ import moment from 'moment'
 import InfiniteScroll from 'react-infinite-scroller'
 import StatusItem from './StatusItem'
 import { statusReport, poList } from '../data/mockData'
-
+import { Segment } from 'semantic-ui-react'
+import Avatar from '../components/Avatar'
 export interface IDashboardContentProps {
   status?: any
   list?: any
+  setStatelogout?: any
+  statelogout?: any
+  userlevel?: any
+  title?: any
 }
 
 const DashboardContent = (props: IDashboardContentProps) => {
+  const { setStatelogout, statelogout, userlevel, title } = props
+
   const format = 'YYYY-MM-DD'
   const { status, list } = props
   const [state, setState] = useState({
@@ -29,37 +35,7 @@ const DashboardContent = (props: IDashboardContentProps) => {
     selectedDate: moment().format(format),
   })
   const { Title, Text } = Typography
-  const data = [
-    {
-      title: 'ORDER NUMBER 1',
-      date: '2020-02-23',
-    },
 
-    {
-      title: 'ORDER NUMBER 2',
-      date: '2020-02-20',
-    },
-    {
-      title: 'ORDER NUMBER 3',
-      date: '2020-02-20',
-    },
-    {
-      title: 'ORDER NUMBER 4',
-      date: '2020-02-20',
-    },
-    {
-      title: 'ORDER NUMBER 5',
-      date: '2020-02-19',
-    },
-    {
-      title: 'ORDER NUMBER 6',
-      date: '2020-02-21',
-    },
-    {
-      title: 'ORDER NUMBER 7',
-      date: '2020-02-21',
-    },
-  ]
   console.log(list, 'ARRAYLIST')
   const filterbydate = list.filter(
     (x: any) =>
@@ -98,15 +74,7 @@ const DashboardContent = (props: IDashboardContentProps) => {
           <div className="avatar">
             <div className="rows">
               <div>
-                <Avatar
-                  size={60}
-                  icon="user"
-                  style={{
-                    backgroundColor: '#3182CE',
-                    color: 'white',
-                    marginRight: '10px',
-                  }}
-                />
+                <Avatar />
               </div>
             </div>
           </div>
@@ -115,13 +83,13 @@ const DashboardContent = (props: IDashboardContentProps) => {
               <Title
                 level={4}
                 style={{ margin: 0, paddingTop: '5px', color: '#3182CE' }}>
-                Welcome Back, Admin!
+                Welcome Back, {statelogout.username}!
               </Title>
-              <Text>Tour last log-in was:</Text>
+              <Text>Your last log-in was:</Text>
               <br></br>
               <Text>January 12, 2020 14:33 GST</Text>
               <br /> <br />
-              <Text>Today is 02/30/2020 0839 +GST</Text>
+              <Text>Today is {moment().format()}</Text>
             </div>
 
             <Card
@@ -170,7 +138,7 @@ const DashboardContent = (props: IDashboardContentProps) => {
                       description={
                         <div>
                           <Text>
-                            Document Date:{' '}
+                            Document Date:
                             {moment(item.documentDate).format('MMMM D, YYYY')}
                           </Text>
                         </div>

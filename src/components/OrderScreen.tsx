@@ -5,33 +5,37 @@ import MasterList from '../components/MasterList'
 import { POdata } from '../data/MasterListMock'
 import { Divider, Input } from 'antd'
 import { observer } from 'mobx-react'
-const { Search } = Input
+import { sorts, SearchFilterOrder } from '../components/helper_functions'
 
+const { Search } = Input
 export interface IOrderScreenProps {
   po?: any
+  state?: any
+  setState?: any
+  store?: any
+  setQuery?: any
+  userInfo?: any
+  title?: any
 }
 
 const OrderScreen = (props: IOrderScreenProps) => {
+  const {
+    store,
+    setQuery,
+    po,
+    state: mainState,
+    setState: mainSetState,
+    userInfo,
+    title,
+  } = props
   const [state, setState] = useState({
     sortby: 'date',
-    POdata: props.po,
+    POdata: po,
+    status: 'Ready to Ship',
+    datasource: [],
+    search: '',
   })
 
-  console.log('Props', props.po)
-  const sorts = [
-    {
-      value: 'date',
-      desc: 'Date',
-    },
-    {
-      value: 'supp',
-      desc: 'Supplier',
-    },
-    {
-      value: 'status',
-      desc: 'Status',
-    },
-  ]
   return (
     <div className="content1orders">
       <div>
@@ -43,7 +47,10 @@ const OrderScreen = (props: IOrderScreenProps) => {
         <div className="search">
           <Search
             placeholder="input search text"
-            onSearch={value => console.log(value)}
+            onSearch={value => {
+              console.log(value, 'valueeeeee')
+              SearchFilterOrder(value, state.POdata, setState, state)
+            }}
             enterButton
           />
         </div>
@@ -52,7 +59,15 @@ const OrderScreen = (props: IOrderScreenProps) => {
         </div>
       </div>
       <div className="masterlist">
-        <MasterList state={state} setState={setState}></MasterList>
+        <MasterList
+          userInfo={userInfo}
+          store={store}
+          setQuery={setQuery}
+          filterPO={state.datasource}
+          tabState={mainState}
+          tabSetState={mainSetState}
+          state={state}
+          setState={setState}></MasterList>
       </div>
     </div>
   )
